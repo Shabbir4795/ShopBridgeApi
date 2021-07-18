@@ -42,7 +42,7 @@ namespace ShopBridge.Data
             }
             catch(Exception ex)
             {
-                
+                return productDetails;
             }
             finally
             {
@@ -102,7 +102,10 @@ namespace ShopBridge.Data
                         }
                     }
             }
-            catch(Exception ex) { }
+            catch(Exception ex) 
+            {
+                return result;
+            }
             finally
             {
                 sqlConnection.Close();
@@ -134,7 +137,10 @@ namespace ShopBridge.Data
                         }
                     }
             }
-            catch(Exception ex) { }
+            catch(Exception ex) 
+            {
+                return result;
+            }
             finally
             {
                 sqlConnection.Close();
@@ -168,7 +174,10 @@ namespace ShopBridge.Data
                         }
                     }
             }
-            catch(Exception ex) { }
+            catch(Exception ex) 
+            {
+                return result;
+            }
             finally
             {
                 sqlConnection.Close();

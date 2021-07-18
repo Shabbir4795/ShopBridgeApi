@@ -21,10 +21,10 @@ namespace ShopBridge.Controllers
         public List<ProductDetails> GetDetailsOfProduct(string id = "")
         {
             
-                ProductDetails pd = new ProductDetails();
-                List<ProductDetails> list = new List<ProductDetails>();
-                list = _shopBridgeApiService.GetProductDetails(id);
-                return list;
+            ProductDetails pd = new ProductDetails();
+            List<ProductDetails> list = new List<ProductDetails>();
+            list = _shopBridgeApiService.GetProductDetails(id);
+            return list;
             
         }
 

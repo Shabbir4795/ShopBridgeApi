@@ -20,7 +20,14 @@ namespace ShopBridge.Services
         public List<ProductDetails> GetProductDetails(string ID)
         {             
             List<ProductDetails> productDetails = new List<ProductDetails>();
-            productDetails = _databaseCall.GetProducts(ID);
+            try
+            {
+                productDetails = _databaseCall.GetProducts(ID);
+            }
+            catch (Exception ex)
+            {
+                return productDetails;
+            }
             return productDetails;
         }
 
@@ -28,8 +35,9 @@ namespace ShopBridge.Services
         {
             string result = "FAIL";
             string parameter;
+            try 
+            {
             var serializer = new XmlSerializer(product.GetType());
-
             using (var stringwriter = new System.IO.StringWriter())
             {
                 
@@ -39,13 +47,25 @@ namespace ShopBridge.Services
                 parameter = parameter.Replace("<?xml version?>", "");
             }
             result = _databaseCall.AddProduct(parameter);
+            }
+            catch (Exception ex)
+            {
+                return result;
+            }
             return result;
         }
 
         public string RemoveProduct(DeleteRequest request)
         {
             string result = "FAIL";
-            result = _databaseCall.RemoveProduct(request.ProductId, request.SellerId);
+            try
+            {
+                result = _databaseCall.RemoveProduct(request.ProductId, request.SellerId);
+            }
+            catch (Exception ex)
+            {
+                return result;
+            }
             return result;
         }
 
@@ -55,15 +75,22 @@ namespace ShopBridge.Services
             string parameter;
             var serializer = new XmlSerializer(product.GetType());
 
-            using (var stringwriter = new System.IO.StringWriter())
+            try
             {
+                using (var stringwriter = new System.IO.StringWriter())
+                {
 
-                serializer.Serialize(stringwriter, product);
-                parameter = stringwriter.ToString();
-                parameter = parameter.Replace("<?xml version=\"1.0\" encoding=\"utf-16\"?>", "");
-                parameter = parameter.Replace("<?xml version?>", "");
+                    serializer.Serialize(stringwriter, product);
+                    parameter = stringwriter.ToString();
+                    parameter = parameter.Replace("<?xml version=\"1.0\" encoding=\"utf-16\"?>", "");
+                    parameter = parameter.Replace("<?xml version?>", "");
+                }
+                result = _databaseCall.UpdateProduct(parameter);
             }
-            result = _databaseCall.UpdateProduct(parameter);
+            catch(Exception ex)
+            {
+                return result;
+            }
 
             return result;
         }
